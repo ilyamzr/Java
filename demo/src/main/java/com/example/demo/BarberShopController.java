@@ -1,15 +1,16 @@
 package com.example.demo;
 
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
-
 @RestController
 public class BarberShopController {
+
+    String str = "Barber ";
 
     private final List<Barber> availableBarbers = Arrays.asList(
             new Barber("John", Arrays.asList("Monday", "Wednesday", "Friday")),
@@ -19,22 +20,24 @@ public class BarberShopController {
     );
 
     @GetMapping("/query")
-    public ResponseDTO getBarberQuery(@RequestParam String barberName) {
+    public ResponseDto getBarberQuery(@RequestParam String barberName) {
         for (Barber barber : availableBarbers) {
             if (barber.getName().equalsIgnoreCase(barberName)) {
-                return new ResponseDTO("Barber " + barberName + " is available on: " + String.join(", ", barber.getWorkingDays()));
+                return new ResponseDto(str + barberName + " is available on: "
+                        + String.join(", ", barber.getWorkingDays()));
             }
         }
-        return new ResponseDTO("Barber " + barberName + " is not found.");
+        return new ResponseDto(str + barberName + " is not found.");
     }
 
     @GetMapping("/path/{barberName}")
-    public ResponseDTO getBarberPath(@PathVariable String barberName) {
+    public ResponseDto getBarberPath(@PathVariable String barberName) {
         for (Barber barber : availableBarbers) {
             if (barber.getName().equalsIgnoreCase(barberName)) {
-                return new ResponseDTO("Barber " + barberName + " is available on: " + String.join(", ", barber.getWorkingDays()));
+                return new ResponseDto(str + barberName + " is available on: "
+                        + String.join(", ", barber.getWorkingDays()));
             }
         }
-        return new ResponseDTO("Barber " + barberName + " is not found.");
+        return new ResponseDto(str + barberName + " is not found.");
     }
 }
